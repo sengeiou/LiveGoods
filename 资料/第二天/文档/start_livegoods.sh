@@ -1,0 +1,10 @@
+systemctl start docker
+docker start mongod
+rm -rf /var/fdfs/tracker/data/fdfs_trackerd.pid
+rm -rf /var/fdfs/storage/data/fdfs_storaged.pid
+docker start tracker
+docker start storage
+docker start livegoods-eureka
+docker start banner
+docker start recommendation
+docker start hotproduct

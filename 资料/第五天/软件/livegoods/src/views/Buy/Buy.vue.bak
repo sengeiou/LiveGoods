@@ -1,0 +1,29 @@
+<template>
+    <div>
+        <Header title='预订结果' />
+        预订结果:{{msg}}
+    </div>
+</template>
+<script>
+import Header from '../../components/Header/Header'
+export default {
+    name:'Buy',
+    data(){
+        return{
+            msg:''
+        }
+    },
+    components:{
+        Header
+    },
+    mounted() {
+        // 获取是否购买成功数据
+        this.$api.buyaction({id:this.$route.params.id,user:this.$route.params.user})
+        .then(data=>{
+            // console.log(data)
+            this.msg = data.data.msg
+        })
+    },
+
+}
+</script>

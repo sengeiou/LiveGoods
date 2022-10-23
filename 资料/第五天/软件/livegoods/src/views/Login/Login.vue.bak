@@ -1,0 +1,151 @@
+<template>
+  <div id="login-container">
+    <div class="input-container phone-container">
+      <i class="icon-tablet"></i>
+      <input
+        placeholder="请输入手机号"
+        v-model="msg"
+      />
+    </div>
+    <div class="input-container password-container">
+      <i class="icon-key"></i>
+      <button v-if='disableclick'>{{time}}</button>
+      <button v-else @click='sendYzm' :disabled='disableclick' >发送验证码</button>
+      
+      <input type="text" placeholder="输入验证码" v-model="pwd" />
+      
+    </div>
+    <button class="btn-login" @click="login" :style="{background:!disableclick?'grey':'#ff5555'}" :disabled='!disableclick'>登录</button>
+  </div>
+</template>
+<script>
+import { mapActions } from 'vuex'
+export default {
+    name:'Login',
+    data(){
+        return{
+            msg:'',
+            pwd:'',
+            disableclick:false,
+            time:60,
+            timer:null
+        }
+    },
+    methods: {
+        ...mapActions(['setUserAction']),
+        sendYzm(){
+          if(this.timer){
+            clearInterval(this.timer)
+          }
+          this.$api.sendyzm({phone:this.msg})
+          .then(data=>{
+	    if(data.data.status==200){
+	     this.$message({
+                message: '恭喜你，这是一条成功消息',
+                type: 'success',
+		offset:100
+             });
+	     this.dtimer()
+	    }else{
+	     this.$message({
+                message: data.data.msg,
+                type: 'error',
+		offset:100
+             });
+	    }
+          })
+          
+        },
+         // 倒计时定时器
+    dtimer(){
+      let that = this;
+      that.timer = setInterval(function(){
+        if(that.time>0){
+          that.disableclick = true;
+          that.time = that.time -1;
+        }else{
+          that.disableclick = false;
+          that.timer = null;
+        }
+      },1000)
+    },
+    
+        login(){
+            this.$api.login({
+              username:this.msg,
+              password:this.pwd
+            })
+            .then(data=>{
+              console.log(data)
+              if(data.data.status == 200){
+                  this.setUserAction({data:this.msg})
+                  window.history.back();
+              }else{
+                alert(data.data.msg)
+              }
+            })
+           
+        }
+    },
+}
+</script>
+<style lang="less" scoped>
+#login-container {
+  width: 300px;
+  margin: 160px auto 0 auto;
+
+  .input-container {
+    background-color: #fff;
+    border: 1px solid #f1f1f1;
+    padding: 5px 10px;
+    border-radius: 5px;
+    overflow: hidden;
+
+    input {
+      font-size: 16px;
+      display: block;
+      border: none;
+    }
+    i {
+      color: rgb(233, 32, 61);
+      width: 16px;
+      float: left;
+      margin-top: 3px;
+      font-size: 17px;
+    }
+  }
+  .phone-container {
+    input {
+      margin-left: 20px;
+    }
+  }
+  .password-container {
+    margin-top: 10px;
+    input {
+      margin-left: 20px;
+      margin-right: 80px;
+    }
+    button {
+      width: 80px;
+      height: 100%;
+      font-size: 16px;
+      color: #ff5555;
+      border: 0;
+      background-color: #fff;
+      text-align: center;
+      float: right;
+    }
+  }
+  .btn-login {
+    width: 100%;
+    text-align: center;
+    background-color: #ff5555;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-top: 10px;
+    padding: 5px 0;
+  }
+}
+</style>
