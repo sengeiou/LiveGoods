@@ -1,7 +1,5 @@
 # LiveGoods
 
-
-
 ## 一 、项目简介
 
     livegoods房屋海选平台，是一个前后端分离架构项目。客户端包含移动客户端、PC客户端的微服务项目。项目包含了用户在线房屋租赁、房屋买卖、和房屋相关的商城功能。
@@ -12,17 +10,11 @@
 
 软件及工具：IDEA 、FastDFS、Nginx、MongoDB、Elasticsearch、Redis、Docker。
 
-
-
-
-
 ## 二、启动前端项目
 
         前端工程师独立开发前端工程，前端工程可以**独立启动**，可以本地运行，可以本地测试，与后端服务代码解耦合。前端工程最终形成的基本都是基于HTML提供的类静态页面，页面中有若干框架，可以通过远程访问，获取后端工程提供的数据，进行动态展示。为了能够显示数据，前端多结合Mock.js进行模拟数据。
 
         后端工程师，是根据前端工程师和后端工程师协商出的访问接口（接口文档），进行代码的开发，提供若干服务接口，在接收到请求的时候，进行相应的服务处理，并返回约定好的数据结果。
-
-
 
 ### (2-1) 前端工程运行环境
 
@@ -80,15 +72,11 @@ cnpm install -g nodemon
 
 测试
 
-当前项目的前端系统，默认端口是80。可以通过浏览器访问： http://localhost:80/测试系统是否正常启动。
+当前项目的前端系统，默认端口是80。可以通过浏览器访问： http://localhost:80/ 测试系统是否正常启动。
 
 项目是基于H5的移动端项目。这个项目可以直接在移动端浏览器中打开，也可以内嵌到安卓或IOS的APP中。
 
 浏览器设置
-
-
-
-
 
 ## 三、环境准备
 
@@ -104,57 +92,59 @@ cnpm install -g nodemon
 
     FastDFS：192.168.8.142
 
-
-
-
-
-
-
 ## 四、项目总体结构
 
     整个项目使用微服务架构，并使用Spring Cloud作为微服务架构总体实现技术。拆分颗粒度为接口（接口文档一个接口），每个接口对应一个项目。使用Eureka作为注册中心，使用Gateway作为网关，使用Config作为分布式配置中心，使用OpenFeign进行接口通信，使用Hystrix进行服务容灾，搜索使用Elasticsearch提升搜索效率，缓存工具使用Redis，缓存技术使用Spring Cache，数据库使用MongoDB，数据访问技术使用Spring Data，分布式事务处理方案使用Tx-LCN，图片上传下载使用FastDFS.
 
 MongoDB身为NoSQL数据库，又带有索引，本身读取性能就很高，此处可以使用redis作为缓存工具，也可以直接从MongoDB中取数据。在本次项目中使用redis作为缓存工具，Spring Cache作为缓存技术。
 
-
-
 ## 五、搭建父项目
+
+依赖管理、版本管理
 
 
 
 ## 六、搭建Eureka
 
+配置文件
 
+```java
+@EnableEurekaServer
+```
 
 ## 七、实现Banner服务——轮播图片
 
-livegoods_banner
+（1）livegoods_banner
 
-livegoods_commons
+pojo-dao-service-controller-Eureka注册
 
-livegoods_data_mongodb
+（2）livegoods_dao_mongodb
 
+    spring-boot-starter-data-mongodb
 
+（3）livegoods_commons  自定义项目中的返回类型
 
-## 八、搭建gateway
+（4）dockers虚拟化
 
+## 八、搭建gateway——请求转发
 
-
-
-
-## 九、热销商品
-
-livegoods_hot_product
+前端是4006端口与后端微服务不一致。
 
 
 
-## 十、热门推荐服务
+## 九、热门推荐商品
+
+livegoods_pojo_item         实体类
 
 livegoods_recommedation
 
+dockers虚拟化
 
+## 十、热销商品
 
+livegoods_hot_product
 
+dockers虚拟化
 
 ## 十一、实现Elasticsearch数据初始化
 
@@ -162,124 +152,48 @@ livegoods_search
 
 
 
-
-
 ## 十二、使用Spring Security对初始化做认证
-
-
-
-
-
-
 
 ## 十三、实现详情接口
 
 livegoods_details
 
-
-
-
-
 ## 十四、Redis
 
 livegoods_data_redis
-
-
-
-
 
 ## 十五、评论
 
 livegoods_comments
 
-
-
-
-
 ## 十六、倒计时
 
 livegoods_buy_action
 
-
-
-
-
 ## 十七、发送验证码
-
-
-
-
 
 ## 十八、登录
 
-
-
-
-
 ## 十九、搭建Rabbitmq发送消息依赖
-
-
-
-
 
 ## 二十、实现预定时消息接收
 
-
-
-
-
 ## 二十一、实现订单创建接口
-
-
-
-
 
 ## 二十二、实现预定成功后发送创建队列消息
 
-
-
-
-
 ## 二十三、实现接收创建订单消息功能
-
-
-
-
-
-
 
 ## 二十四、实现订单信息显示功能
 
-
-
-
-
 ## 二十五、修改order集合添加houseID属性
-
-
-
-
 
 ## 二十六、编写评论新增接口
 
-
-
-
-
 ## 二十七、实现评论功能
-
-
-
-
-
-
 
 ## 二十八、搭建事务管理器
 
 livegoods_lcn_tm
-
-
-
-
 
 ## 二十九、实现分布式事务
