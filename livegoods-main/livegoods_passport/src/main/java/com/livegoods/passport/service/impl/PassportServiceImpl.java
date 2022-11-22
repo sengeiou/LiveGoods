@@ -27,6 +27,7 @@ public class PassportServiceImpl implements PassportService {
 
     /**
      * 登录
+     *      校验手机号是否合法
      *  1、 拼接key
      *  2、 从redis查询验证码
      *  3、 比较redis中的验证码，和请求提供的password是否一致

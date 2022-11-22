@@ -102,8 +102,6 @@ MongoDB身为NoSQL数据库，又带有索引，本身读取性能就很高，�
 
 依赖管理、版本管理
 
-
-
 ## 六、搭建Eureka
 
 配置文件
@@ -130,8 +128,6 @@ pojo-dao-service-controller-Eureka注册
 
 前端是4006端口与后端微服务不一致。
 
-
-
 ## 九、热门推荐商品
 
 livegoods_pojo_item         实体类
@@ -148,33 +144,74 @@ dockers虚拟化
 
 ## 十一、实现Elasticsearch数据初始化
 
-livegoods_search
+livegoods_search  初始化数据到ES，数据来源是MongoDB
 
+livegoods_pojo_houses 定义房屋的实体类及属性
 
+livegoods_details   房屋信息详情页接口，访问MongoDB
 
-## 十二、使用Spring Security对初始化做认证
+livegoods_search想调用livegoods_details，利用Fegin作远程调用，可以在search中注入 livegoods_details_service
+
+调用流程图：（s代表livegoods_searc， d代表livegoods_details）
+
+![初始化ES数据流程图.jpg](F:\Project\LiveGoods\资料\第三天\文档\初始化ES数据流程图.jpg)
+
+## 十二、
 
 ## 十三、实现详情接口
 
 livegoods_details
 
-## 十四、Redis
 
-livegoods_data_redis
 
-## 十五、评论
+## 十四、评论
+
+livegoods_pojo_comment
 
 livegoods_comments
 
+
+
+## 十五、Redis
+
+livegoods_data_redis
+
+
+
+## SpringSecurity
+
+security: # 配置静态security用户和密码。启动时加载。  
+  user:  
+    name: livegoods  
+    password: livegoods
+
+
+
 ## 十六、倒计时
+
+livegoods_but_time
 
 livegoods_buy_action
 
-## 十七、发送验证码
 
-## 十八、登录
+
+## 十七、发送验证码与登录
+
+livegoods_passport
+
+livegoods_pojo_passport
+
+
 
 ## 十九、搭建Rabbitmq发送消息依赖
+
+秒杀实现逻辑 
+
+![](C:\Users\xu\AppData\Roaming\marktext\images\2022-11-22-21-51-21-image.png)
+
+livegoods_message_publisher
+
+
 
 ## 二十、实现预定时消息接收
 
